@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # big files
-models
+models/SheMovedHere/B*
