@@ -1,0 +1,38 @@
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+main {
+  position: absolute;
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+#autoAnimateCamBtn {
+  position: fixed;
+  top: 90vh;
+  left: 10vw;
+  font-family: 'Roboto', sans-serif;
+  font-size: 2em;
+  color: #fff;
+  text-align: left;
+  text-shadow: 0 0 10px #000;
+  z-index: 1;
+  border: 1px solid rgb(78, 8, 8);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#autoAnimateCamBtn:hover {
+  background-color: rgba(5, 215, 230, 0.5);
+  animation: bgcolor 600ms ease-in-out;
+}
+
+@keyframes bgcolor {
+  0% {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    background-color: rgba(5, 215, 230, 0.5);
+  }
+}
