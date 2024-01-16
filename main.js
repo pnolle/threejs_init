@@ -24,9 +24,9 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 // create bloom postprocessing
 const params = {
-  threshold: 0,
-  strength: 1,
-  radius: 0,
+  threshold: 0.951,
+  strength: 0.381,
+  radius: 0.3,
   exposure: 1,
 };
 
