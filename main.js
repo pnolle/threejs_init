@@ -21,7 +21,6 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-
 // create bloom postprocessing
 const params = {
   threshold: 0.951,
@@ -137,6 +136,7 @@ gltfHochhaus.load(
 let modelReady = false;
 let modelSnipSign;
 let animationMixerSnipSign;
+let snipSignNeonLight;
 const gltfSnipSign = new GLTFLoader();
 gltfSnipSign.load(
   "./models/SheMovedHere/SnipSign_neon.gltf",
@@ -147,6 +147,23 @@ gltfSnipSign.load(
     animationMixerSnipSign = new THREE.AnimationMixer(gltf.scene);
     const animationAction = animationMixerSnipSign.clipAction(gltf.animations[0]);
     animationAction.play();
+
+    const snipSignNeonSignParts = modelSnipSign.children.filter((c) => c.name == 'SnipSign_Neon');
+    const snipSignNeonSign = snipSignNeonSignParts.length > 0 ? snipSignNeonSignParts[0] : null;
+    const snipSignNeonLights = snipSignNeonSign.children.filter((c) => c.name == 'Curve027');
+    snipSignNeonLight = snipSignNeonLights.length > 0 ? snipSignNeonLights[0] : null;
+    console.warn(snipSignNeonLight, snipSignNeonLight.isMesh);
+    if (snipSignNeonLight.isMesh) {
+      snipSignNeonLight.material = new THREE.MeshStandardMaterial({
+        color: 0xfa00ff,
+        emissive: 0xfa00ff,
+        emissiveIntensity: 2.5,
+        emissiveMap: snipSignNeonLight.material.emissiveMap,
+        map: snipSignNeonLight.material.map,
+        transparent: false,
+        opacity: 1,
+      });
+    }
 
     scene.add(modelSnipSign);
     modelReady = true;
