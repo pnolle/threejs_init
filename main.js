@@ -224,12 +224,36 @@ function onWindowResize() {
 let previousTarget = JSON.stringify(controls.target);
 let quaternion = camera.quaternion;
 let previousQuaternion = JSON.stringify(camera.getWorldQuaternion(quaternion));
+
+let snipSignNeonLightFlicker = Math.random() * 3;
+let flickerDuration = 0;
+let flickerStateOn = true;
+
+const snipSignNeonLightFlickerUpdate = (delta) => {
+  flickerDuration += delta;
+  // console.log('snipSignNeonLightFlickerUpdate', flickerStateOn, flickerDuration, snipSignNeonLightFlicker);
+  if (flickerDuration > snipSignNeonLightFlicker) {
+    if (flickerStateOn) {
+      snipSignNeonLight.material.emissiveIntensity = 0;
+      snipSignNeonLightFlicker = Math.random();
+      flickerDuration = 0;
+    }
+    else {
+      snipSignNeonLight.material.emissiveIntensity = 2.5;
+      snipSignNeonLightFlicker = Math.random() * 3;
+      flickerDuration = 0;
+    }
+    flickerStateOn = !flickerStateOn;
+  }
+}
+
 function animate() {
   requestAnimationFrame(animate);
 
   if (modelReady) {
-    const delta = clock.getDelta();
-    animationMixerSnipSign.update(delta);
+    const delta = clock.getDelta()
+    animationMixerSnipSign.update(delta / 2);
+    snipSignNeonLightFlickerUpdate(delta);
   }
 
   pointLight.position.y += pointLightYMovementUp ? 0.5 : -0.5;
